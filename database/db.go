@@ -14,7 +14,7 @@ var (
 )
 
 func ConnectionDB() {
-	stringConexao := "host=localhost user=root password=root dbname=root port=5431 sslmode=disable"
+	stringConexao := "host=localhost user=root password=root dbname=postgres port=5431 sslmode=disable"
 	DB, err = gorm.Open(postgres.Open(stringConexao))
 	if err != nil {
 		log.Panic("Erro ao se conectar com o banco de dados")

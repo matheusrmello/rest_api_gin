@@ -17,7 +17,7 @@ func ExibeTodosAlunos(c *gin.Context) {
 func Saudacao(c *gin.Context) {
 	nome := c.Params.ByName("nome")
 	c.JSON(200, gin.H{
-		"API diz:": "E ai " + nome + ", tudo beleza",
+		"API diz": "E ai " + nome + ", tudo beleza",
 	})
 }
 
@@ -28,6 +28,11 @@ func CriaNovoAluno(c *gin.Context) {
 			"error": err.Error()})
 		return
 
+	}
+	if err := models.ValidaDados(&aluno); err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
 	}
 	database.DB.Create(&aluno)
 	c.JSON(http.StatusOK, aluno)
@@ -63,6 +68,11 @@ func EditaAluno(c *gin.Context) {
 		return
 
 	}
+	if err := models.ValidaDados(&aluno); err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
 	database.DB.Model(&aluno).UpdateColumns(aluno)
 	c.JSON(http.StatusOK, aluno)
 
@@ -79,4 +89,10 @@ func BuscaPorCPF(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, aluno)
 
+}
+
+func ExibePaginaIndex(c *gin.Context)  {
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"mensagem":"Boas vindas :)",
+	})
 }

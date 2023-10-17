@@ -9,7 +9,8 @@ services:
     ports:
       - "5431:5432"
     volumes:
-      - ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql   
+      - ./migration/docker-database-initial.sql:/docker-entrypoint-initdb.d/docker-database-initial.sql  
+    restart: always
 
   pgadmin-compose:
     image: dpage/pgadmin4
@@ -20,3 +21,12 @@ services:
       - "54321:80"
     depends_on:
       - postgres
+    restart: always
+    
+  # web:
+  #   build: .
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - postgres
+    
