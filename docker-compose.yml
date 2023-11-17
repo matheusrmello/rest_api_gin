@@ -22,11 +22,3 @@ services:
     depends_on:
       - postgres
     restart: always
-    
-  # web:
-  #   build: .
-  #   ports:
-  #     - 8000:8000
-  #   depends_on:
-  #     - postgres
-    
