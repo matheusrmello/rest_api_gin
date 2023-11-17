@@ -16,6 +16,12 @@ jobs:
         - name: Build
           run: go run -v main.go
 
+        - name: Build Database
+          run: docker compose build
+
+        - name: Create Database
+          run: Docker compose up -d
+          
         - name: Test
           run: go test -v main_test.go
         
