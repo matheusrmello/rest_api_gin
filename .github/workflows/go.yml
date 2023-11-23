@@ -1,29 +1,31 @@
-name:  go-server
+name: go-server
 
 on: [push]
 
-jobs: 
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
+jobs:
+  test-DB:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: Configurando o Go
-          uses: actions/setup-go@v4
-          with:
-            go-version: '1.21.X'
-            cache-dependency-path: subdir/go.sum
+      - name: Configurando o Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '>=1.21.x'
 
-        - name: Build Database
-          run: docker compose build
+      - name: Build Database
+        run: docker compose build
 
-        - name: Create Database
-          run: docker compose up -d
+      - name: Create Database
+        run: docker compose up -d
 
-        - name: Instalando dependencias
-          run: go get .
+      - name: Instalando dependencias
+        run: go get .
 
-        - name: Build
-          run: go build -v main.go
-          
-        
+  Build:
+    needs: test-DB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: go build -v main.go
