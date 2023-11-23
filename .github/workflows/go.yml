@@ -20,7 +20,7 @@ jobs:
           run: docker compose build
 
         - name: Create Database
-          run: Docker compose up -d
+          run: docker compose up -d
           
         - name: Test
           run: go test -v main_test.go
