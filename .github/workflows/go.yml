@@ -22,21 +22,13 @@ jobs:
       - name: Create Database
         run: docker compose up -d
 
+  Build-App:
+    needs: Build-DB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
       - name: Preparing Go
         run: go get .
-
+    
       - name: Build
         run: go build -v main.go
-
-
-  # Build-App:
-  #   needs: Build-DB
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Preparing Go
-  #       run: go get .
-
-  #     - name: Build
-  #       run: go build -v main.go
