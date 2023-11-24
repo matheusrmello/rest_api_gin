@@ -5,13 +5,16 @@ on: [push]
 jobs:
   Build-DB:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go_version: ['1.21', '1.20', '>=1.21']
     steps:
       - uses: actions/checkout@v3
 
       - name: Configurando o Go
         uses: actions/setup-go@v4
         with:
-          go-version: "1.21.x"
+          go-version: ${{ matrix.go_version }}
 
       - name: Build Database
         run: docker compose build
@@ -19,17 +22,14 @@ jobs:
       - name: Create Database
         run: docker compose up -d
 
+  Build-App:
+    needs: Build-DB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
       - name: Preparing Go
         run: go get .
 
       - name: Build
         run: go build -v main.go
-
-
-  # Build-App:
-  #   needs: Build-DB
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-      
