@@ -17,7 +17,8 @@ jobs:
           go-version: ${{ matrix.go_version }}
 
       - name: Test
-        run: echo ${{ secrets.TEST }}
+        run: |
+          echo ${{ secrets.TEST }}
          
       - name: Build Database
         run: docker compose build
