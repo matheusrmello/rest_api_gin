@@ -30,6 +30,10 @@ jobs:
       - name: Build
         run: go build -v main.go
 
+  docker:
+    needs: Build-DB
+    uses: ./.github/workflows/Docker.yml
+
   # Build-App:
   #   needs: Build-DB
   #   runs-on: ubuntu-latest
