@@ -8,9 +8,10 @@ on:
     
 jobs:
   Build-DB:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: ['ubuntu-latest', 'ubuntu-18.04']
         go_version: ['^1.21.0']
     steps:
       - uses: actions/checkout@v3
