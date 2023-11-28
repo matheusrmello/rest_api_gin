@@ -8,10 +8,9 @@ on:
     
 jobs:
   Build-DB:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ 'ubuntu-latest', 'ubuntu-20.04' ]
         go_version: [ '>=1.21' ]
     steps:
       - uses: actions/checkout@v3
@@ -30,6 +29,12 @@ jobs:
       - name: Build
         run: go build -v main.go
 
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: api_go
+          path: main
+          
   docker:
     needs: Build-DB
     uses: ./.github/workflows/Docker.yml
