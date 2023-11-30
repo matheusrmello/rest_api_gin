@@ -34,10 +34,15 @@ jobs:
         with:
           name: api_go
           path: main
-          
+
   docker:
     needs: Build-DB
     uses: ./.github/workflows/Docker.yml
+    secrets: inherit
+ 
+  Deploy-EC2:
+    needs: Build-DB
+    uses: ./.github/workflows/EC2.yml
     secrets: inherit
 
   # Build-App:
