@@ -14,7 +14,7 @@ jobs:
         with:
           name: api_go
           
-      - name: Deploy to Staging server
+      - name: Deploy SSH EC2
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -23,7 +23,7 @@ jobs:
           TARGET: /home/${{ secrets.REMOTE_USER }}
           EXCLUDE: "postgres-data"
 
-      - name: executing remote ssh commands using password
+      - name: Connect SSH instance EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.REMOTE_HOST }}
